@@ -1,5 +1,5 @@
-
 #include "raylib.h"
+#define BACKGROUND_TEXTURE 0.0f, 2.0f, WHITE
 
 int main(void)
 {
@@ -51,18 +51,16 @@ int main(void)
         if (scrollingFore <= -foreground.width*2) scrollingFore = 0;
 
 	BeginDrawing();
-	      
-	    //ClearBackground(RAYWHITE);
 	    ClearBackground(GetColor(0x052c46ff));
 
-            DrawTextureEx(background, (Vector2){ scrollingBack, 20 }, 0.0f, 2.0f, WHITE);
-            DrawTextureEx(background, (Vector2){ background.width*2 + scrollingBack, 20 }, 0.0f, 2.0f, WHITE);
+            DrawTextureEx(background, (Vector2){scrollingBack, 20}, BACKGROUND_TEXTURE);
+            DrawTextureEx(background, (Vector2){background.width*2 + scrollingBack, 20}, BACKGROUND_TEXTURE);
 
-            DrawTextureEx(midground, (Vector2){ scrollingMid, 20 }, 0.0f, 2.0f, WHITE);
-            DrawTextureEx(midground, (Vector2){ midground.width*2 + scrollingMid, 20 }, 0.0f, 2.0f, WHITE);
+            DrawTextureEx(midground, (Vector2){scrollingMid, 20}, BACKGROUND_TEXTURE);
+            DrawTextureEx(midground, (Vector2){midground.width*2 + scrollingMid, 20}, BACKGROUND_TEXTURE);
 
-            DrawTextureEx(foreground, (Vector2){ scrollingFore, 70 }, 0.0f, 2.0f, WHITE);
-            DrawTextureEx(foreground, (Vector2){ foreground.width*2 + scrollingFore, 70 }, 0.0f, 2.0f, WHITE);
+            DrawTextureEx(foreground, (Vector2){scrollingFore, 70}, BACKGROUND_TEXTURE);
+            DrawTextureEx(foreground, (Vector2){foreground.width*2 + scrollingFore, 70}, BACKGROUND_TEXTURE);
 
             DrawTextureRec(scarfy, frameRec, position, WHITE);  // Draw part of the texture
 
