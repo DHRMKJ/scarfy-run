@@ -6,24 +6,30 @@ int main(void)
     const int screenWidth = 800;
     const int screenHeight = 450;
 
-    InitWindow(screenWidth, screenHeight, "raylib [texture] example - sprite anim");
+    InitWindow(screenWidth, screenHeight, "scarfy run");
 
     // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
     Texture2D scarfy = LoadTexture("resources/scarfy.png");        // Texture loading
     Texture2D background = LoadTexture("resources/cyberpunk_street_background.png");
     Texture2D midground = LoadTexture("resources/cyberpunk_street_midground.png");
-    Texture2D foreground = LoadTexture("resources/cyberpunk_street_foreground.png");
+    Texture2D foreground = LoadTexture("resources/cyberpunk_street_foreground.png");    
 
     float scrollingBack = 0.0f;
     float scrollingMid = 0.0f;
     float scrollingFore = 0.0f;
+	
+    float backScrollSpeed = 0.1f;
+    float midScrollSpeed = 0.5f;
+    float foreScrollSpeed = 1.0f;
 
-    Vector2 position = { screenWidth/2 - scarfy.width/6, screenHeight - scarfy.height};
+    Vector2 position = { scarfy.width/6, screenHeight - scarfy.height};
     Rectangle frameRec = { 0.0f, 0.0f, (float)scarfy.width/6, (float)scarfy.height };
     int currentFrame = 0;
 
     int framesCounter = 0;
     int framesSpeed = 8;            // Number of spritesheet frames shown by second
+
+    int jumpFlag = 0;
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 
@@ -40,10 +46,31 @@ int main(void)
 
             frameRec.x = (float)currentFrame*(float)scarfy.width/6;
         }
+	
+	if(!jumpFlag && IsKeyDown(KEY_UP)) {
+		if(position.y >= 140) {
+			position.y -= 10.0;
+		}
+		else {
+			jumpFlag = true;
+		}
+	}
 
-        scrollingBack -= 0.1f;
-        scrollingMid -= 0.5f;
-        scrollingFore -= 1.0f;
+	if(IsKeyReleased(KEY_UP)) {
+		jumpFlag = true;
+	}
+	
+	if(jumpFlag) {
+		if(position.y != screenHeight - scarfy.height) {
+			position.y += 10.0;
+		}else {
+			jumpFlag = false;
+		}
+	}
+
+        scrollingBack -= backScrollSpeed;
+        scrollingMid -= midScrollSpeed;
+        scrollingFore -= foreScrollSpeed;
 
         // NOTE: Texture is scaled twice its size, so it sould be considered on scrolling
         if (scrollingBack <= -background.width*2) scrollingBack = 0;
@@ -66,11 +93,11 @@ int main(void)
 
         EndDrawing();
     }
-
-    UnloadTexture(scarfy);       // Texture unloading
+    UnloadTexture(scarfy);      // Texture unloading
     UnloadTexture(background);  // Unload background texture
     UnloadTexture(midground);   // Unload midground texture
     UnloadTexture(foreground); 
+ 
     CloseWindow();                // Close window and OpenGL context
     return 0;
 }
