@@ -1,0 +1,8 @@
+#define FPS 60
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGHT 450
+#define BACKGROUND_TEXTURE 0.0f, 2.0f, WHITE
+#define MAX_SPRITE_FRAMES 5
+#define SPRITES_COUNTER 6
+
+
