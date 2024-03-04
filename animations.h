@@ -7,6 +7,7 @@ typedef struct {
 } Action;
 
 typedef struct {
+	int framesCounter;
 	int currentFrame;
 	int framesSpeed;
 	Vector2 position;
@@ -20,8 +21,9 @@ typedef struct {
 } Background;
 
 void initAnimationData(AnimationData* animation, Texture2D* sprite); 
-void walkAnimation(int* framesCounter, Texture2D* sprite, AnimationData* animation);
+void setAnimationPosition(AnimationData* animation, Vector2 position);
+void walkAnimation(Texture2D* sprite, AnimationData* animation);
 void jumpAnimation(Texture2D* sprite, AnimationData* animation);
 void initBackground(Background* back, Background* mid, Background* fore);
-void moveBackground(Background* back, Background* mid, Background* fore, int width);
+void moveBackground(Background* back, Background* mid, Background* fore, int backgroundWidth, int midgroundWidth, int foregroundWidth);
 #endif

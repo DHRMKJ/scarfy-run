@@ -4,5 +4,5 @@
 #define BACKGROUND_TEXTURE 0.0f, 2.0f, WHITE
 #define MAX_SPRITE_FRAMES 5
 #define SPRITES_COUNTER 6
-
+#define SPEED 7.0
 

@@ -1,10 +1,14 @@
 #include "config.h"
 #include "animations.h"
 
+void setAnimationPosition(AnimationData* animation, Vector2 position) {
+	animation -> position = position;
+}
+
 void initAnimationData(AnimationData* animation, Texture2D* sprite) {
 	animation -> currentFrame = 0;
 	animation -> framesSpeed = 8;
-	animation -> position.x =  sprite->width/SPRITES_COUNTER;
+	animation -> position.x =  sprite->width / SPRITES_COUNTER;
 	animation -> position.y = SCREEN_HEIGHT - sprite -> height;
 	animation -> frameRec.x =  0.0f;
 	animation -> frameRec.y = 0.0f;
@@ -13,9 +17,9 @@ void initAnimationData(AnimationData* animation, Texture2D* sprite) {
 	animation -> actions.jump = false;
 }
 
-void walkAnimation(int* framesCounter, Texture2D* sprite, AnimationData* animation) {
-        if (*framesCounter >= (FPS / animation -> framesSpeed)) {
-            *framesCounter = 0;
+void walkAnimation(Texture2D* sprite, AnimationData* animation) {
+        if (animation -> framesCounter >= (FPS / animation -> framesSpeed)) {
+            animation -> framesCounter = 0;
             animation -> currentFrame++;
 	    if (animation -> currentFrame > MAX_SPRITE_FRAMES) { 
 		    animation -> currentFrame = 0;
@@ -32,7 +36,7 @@ void jumpAnimation(Texture2D* sprite, AnimationData* animation) {
 			animation -> position.y -= GRAVITY;
 		}
 		else {
-			animation-> actions.jump = true;
+			animation -> actions.jump = true;
 		}
 	}
 
@@ -50,22 +54,22 @@ void jumpAnimation(Texture2D* sprite, AnimationData* animation) {
 }
 
 void initBackground(Background* back, Background* mid, Background* fore) {
-	back -> speed = 0.1f;
+	back -> speed = SPEED / 10;
 	back -> scroll = 0.0f;
 	
-	mid -> speed = 0.5f;
+	mid -> speed = SPEED / 2;
 	mid -> scroll = 0.0f;
 	
-	fore -> speed = 1.0f;
+	fore -> speed = SPEED;
 	fore -> scroll = 0.0f;
 }
 
 
-void moveBackground(Background* back, Background* mid, Background* fore, int width) {
+void moveBackground(Background* back, Background* mid, Background* fore, int backgroundWidth, int midgroundWidth, int foregroundWidth) {
 	back -> scroll -= back -> speed;
 	mid -> scroll -= mid -> speed;
 	fore -> scroll -= fore -> speed;
-        if (back -> scroll <= -width*2) back -> scroll = 0;
-        if (mid -> scroll <= -width*2) mid -> scroll = 0;
-        if (fore -> scroll <= -width*2) fore -> scroll = 0;
+        if (back -> scroll <= -backgroundWidth*2) back -> scroll = 0.0f;
+        if (mid -> scroll <= -midgroundWidth*2) mid -> scroll = 0.0f;
+        if (fore -> scroll <= -foregroundWidth*2) fore -> scroll = 0.0f;
 }
