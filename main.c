@@ -1,16 +1,6 @@
+#include<stdio.h>
 #include "config.h"
 #include "animations.h"
-
-void RenderBackground(Texture2D* background,Texture2D* midground, Texture2D* foreground, Background* back, Background* mid, Background* fore) {
-	    DrawTextureEx(*background, (Vector2){back -> scroll, 20}, BACKGROUND_TEXTURE);
-            DrawTextureEx(*background, (Vector2){background -> width*2 + back -> scroll, 20}, BACKGROUND_TEXTURE);
-
-            DrawTextureEx(*midground, (Vector2){mid -> scroll, 20}, BACKGROUND_TEXTURE);
-            DrawTextureEx(*midground, (Vector2){midground -> width*2 + mid -> scroll, 20}, BACKGROUND_TEXTURE);
-
-            DrawTextureEx(*foreground, (Vector2){fore -> scroll, 70}, BACKGROUND_TEXTURE);
-            DrawTextureEx(*foreground, (Vector2){foreground -> width*2 + fore -> scroll, 70}, BACKGROUND_TEXTURE);
-}
 
 int main(void)
 {
@@ -42,17 +32,19 @@ int main(void)
 	caveguyAnimation.framesCounter += 1;
 	
 	walkAnimation(&caveguy, &caveguyAnimation);
-
+	moveBackward(&caveguy, &caveguyAnimation);
+	
 	walkAnimation(&scarfy, &scarfyAnimation);
 	jumpAnimation(&scarfy, &scarfyAnimation);
 
-	if(caveguyAnimation.position.x + caveguy.width/SPRITES_COUNTER >= 0) { 
-		setAnimationPosition(&caveguyAnimation, (Vector2){ caveguyAnimation.position.x - SPEED, caveguyAnimation.position.y});
-	}
-	else {
- 		setAnimationPosition(&caveguyAnimation, (Vector2){ SCREEN_WIDTH, SCREEN_HEIGHT - caveguy.height });
+	Rectangle scarfyPosition = { scarfyAnimation.position.x, scarfyAnimation.position.y, scarfy.width / 6, scarfy.height };
+	Rectangle caveguyPosition = { caveguyAnimation.position.x, caveguyAnimation.position.y, caveguy.width / 6, caveguy.height };
+	if(detectCollitions(scarfyPosition, caveguyPosition)) {
+		printf("%lf %lf %lf %lf\n",scarfyPosition.x, scarfyPosition.y, scarfyPosition.height, scarfyPosition.width);
+		printf("%lf %lf %lf %lf\n\n\n",caveguyPosition.x, caveguyPosition.y, caveguyPosition.height, caveguyPosition.width);
 	}
 	moveBackground(&back, &mid, &fore, background.width, midground.width, foreground.width);
+	
 	// NOTE: Texture is scaled twice its size, so it sould be considered on scrolling
 	BeginDrawing();
 	    ClearBackground(GetColor(0x052c46ff));

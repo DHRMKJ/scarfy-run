@@ -29,8 +29,8 @@ void walkAnimation(Texture2D* sprite, AnimationData* animation) {
 }
 
 void jumpAnimation(Texture2D* sprite, AnimationData* animation) {
-	const int MAX_JUMP = 140;
-	const float GRAVITY = 10.0;
+	const int MAX_JUMP = 80;
+	const float GRAVITY = 8.0;
 	if(!animation -> actions.jump && IsKeyDown(KEY_UP)) {
 		if (animation -> position.y >= MAX_JUMP) {
 			animation -> position.y -= GRAVITY;
@@ -52,6 +52,31 @@ void jumpAnimation(Texture2D* sprite, AnimationData* animation) {
 		}
 	}
 }
+
+void RenderBackground(Texture2D* background,Texture2D* midground, Texture2D* foreground, Background* back, Background* mid, Background* fore) {
+	    DrawTextureEx(*background, (Vector2){back -> scroll, 20}, BACKGROUND_TEXTURE);
+            DrawTextureEx(*background, (Vector2){background -> width*2 + back -> scroll, 20}, BACKGROUND_TEXTURE);
+
+            DrawTextureEx(*midground, (Vector2){mid -> scroll, 20}, BACKGROUND_TEXTURE);
+            DrawTextureEx(*midground, (Vector2){midground -> width*2 + mid -> scroll, 20}, BACKGROUND_TEXTURE);
+
+            DrawTextureEx(*foreground, (Vector2){fore -> scroll, 70}, BACKGROUND_TEXTURE);
+            DrawTextureEx(*foreground, (Vector2){foreground -> width*2 + fore -> scroll, 70}, BACKGROUND_TEXTURE);
+}
+
+void moveBackward(Texture2D* sprite, AnimationData* animation) {
+	if(animation -> position.x + (sprite -> width/SPRITES_COUNTER) >= 0) { 
+		setAnimationPosition(animation, (Vector2){ animation -> position.x - SPEED, animation -> position.y});
+	}
+	else {
+ 		setAnimationPosition(animation, (Vector2){ SCREEN_WIDTH, SCREEN_HEIGHT - sprite -> height });
+	}
+}
+
+bool detectCollitions(Rectangle p1, Rectangle p2) {
+	return p1.x + p1.width - p2.x > 50 && p1.y + p1.height - p2.y > 50 && p1.x < p2.x + p2.width;
+}
+
 
 void initBackground(Background* back, Background* mid, Background* fore) {
 	back -> speed = SPEED / 10;
