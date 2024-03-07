@@ -1,13 +1,13 @@
 #!/bin/bash
 
-exe_path="./main"
+exe_path="./out/main"
 
 if [ -e "$exe_path" ]; then
     rm -f "$exe_path"
 fi
 
-rm ./main
+rm ./out/main
 
-gcc -Wall -Werror --pedantic main.c animations.c game.c -o main -std=c99 -I ./raylib/src -L ./raylib/src -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
+gcc -Wall -Werror --pedantic ./src/main.c ./src/animations.c ./src/game.c -o ./out/main -std=c99 -I ./raylib/src -L ./raylib/src -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
 
-./main
+./out/main
