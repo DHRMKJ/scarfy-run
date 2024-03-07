@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include "config.h"
 #include "animations.h"
+#include "game.h"
 
 int main(void)
 {
@@ -42,6 +43,7 @@ int main(void)
 	if(detectCollitions(scarfyPosition, caveguyPosition)) {
 		printf("%lf %lf %lf %lf\n",scarfyPosition.x, scarfyPosition.y, scarfyPosition.height, scarfyPosition.width);
 		printf("%lf %lf %lf %lf\n\n\n",caveguyPosition.x, caveguyPosition.y, caveguyPosition.height, caveguyPosition.width);
+		break;
 	}
 	moveBackground(&back, &mid, &fore, background.width, midground.width, foreground.width);
 	
@@ -51,7 +53,7 @@ int main(void)
 	    RenderBackground(&background, &midground, &foreground, &back, &mid, &fore);    
 	    DrawTextureRec(caveguy, caveguyAnimation.frameRec, caveguyAnimation.position, WHITE);
 	    DrawTextureRec(scarfy, scarfyAnimation.frameRec, scarfyAnimation.position, WHITE);
-        EndDrawing();
+	EndDrawing();
     }
     UnloadTexture(scarfy);      // Texture unloading
     UnloadTexture(background);  // Unload background texture

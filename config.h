@@ -5,4 +5,4 @@
 #define MAX_SPRITE_FRAMES 5
 #define SPRITES_COUNTER 6
 #define SPEED 7.0
-
+#define SCORE_FACTOR 1;
