@@ -12,5 +12,7 @@ typedef struct {
 } Game;
 
 void InitializeGame(Game* game);
+void clickToStart(Game* game);
+void restartOrExit(Game* game);
 
 #endif

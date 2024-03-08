@@ -5,6 +5,8 @@
 
 int main(void)
 {
+    Game game;
+    InitializeGame(&game); 
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "scarfy run");
 
     // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
@@ -19,41 +21,60 @@ int main(void)
     initBackground(&back, &mid, &fore);
     
     AnimationData scarfyAnimation;
-    initAnimationData(&scarfyAnimation, &scarfy);
-
     AnimationData caveguyAnimation;
-    initAnimationData(&caveguyAnimation, &caveguy);
-    setAnimationPosition(&caveguyAnimation, (Vector2){ SCREEN_WIDTH, SCREEN_HEIGHT - caveguy.height });	
-
+   
     SetTargetFPS(FPS);               // Set our game to run at 60 frames-per-second
 
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
-        scarfyAnimation.framesCounter += 1;
-	caveguyAnimation.framesCounter += 1;
-	
-	walkAnimation(&caveguy, &caveguyAnimation);
-	moveBackward(&caveguy, &caveguyAnimation);
-	
-	walkAnimation(&scarfy, &scarfyAnimation);
-	jumpAnimation(&scarfy, &scarfyAnimation);
+        switch(game.status) {
+            case START:
+                initAnimationData(&scarfyAnimation, &scarfy);
+                initAnimationData(&caveguyAnimation, &caveguy);
+                setAnimationPosition(&caveguyAnimation, (Vector2){ SCREEN_WIDTH, SCREEN_HEIGHT - caveguy.height });	
+                clickToStart(&game);
+                break;
+            case GAMEPLAY:
+                scarfyAnimation.framesCounter += 1;
+	            caveguyAnimation.framesCounter += 1;
+	            
+	            walkAnimation(&caveguy, &caveguyAnimation);
+	            moveBackward(&caveguy, &caveguyAnimation);
+	            
+	            walkAnimation(&scarfy, &scarfyAnimation);
+	            jumpAnimation(&scarfy, &scarfyAnimation);
 
-	Rectangle scarfyPosition = { scarfyAnimation.position.x, scarfyAnimation.position.y, scarfy.width / 6, scarfy.height };
-	Rectangle caveguyPosition = { caveguyAnimation.position.x, caveguyAnimation.position.y, caveguy.width / 6, caveguy.height };
-	if(detectCollitions(scarfyPosition, caveguyPosition)) {
-		printf("%lf %lf %lf %lf\n",scarfyPosition.x, scarfyPosition.y, scarfyPosition.height, scarfyPosition.width);
-		printf("%lf %lf %lf %lf\n\n\n",caveguyPosition.x, caveguyPosition.y, caveguyPosition.height, caveguyPosition.width);
-		break;
-	}
-	moveBackground(&back, &mid, &fore, background.width, midground.width, foreground.width);
-	
-	// NOTE: Texture is scaled twice its size, so it sould be considered on scrolling
-	BeginDrawing();
-	    ClearBackground(GetColor(0x052c46ff));
-	    RenderBackground(&background, &midground, &foreground, &back, &mid, &fore);    
-	    DrawTextureRec(caveguy, caveguyAnimation.frameRec, caveguyAnimation.position, WHITE);
-	    DrawTextureRec(scarfy, scarfyAnimation.frameRec, scarfyAnimation.position, WHITE);
-	EndDrawing();
+                Rectangle scarfyPosition = { scarfyAnimation.position.x, scarfyAnimation.position.y, scarfy.width / SPRITES_COUNTER, scarfy.height };     
+                Rectangle caveguyPosition = { caveguyAnimation.position.x, caveguyAnimation.position.y, caveguy.width / SPRITES_COUNTER, caveguy.height };
+                if(detectCollitions(scarfyPosition, caveguyPosition)) {                                                                                   
+                	printf("%lf %lf %lf %lf\n",scarfyPosition.x, scarfyPosition.y, scarfyPosition.height, scarfyPosition.width);                          
+                	printf("%lf %lf %lf %lf\n\n\n",caveguyPosition.x, caveguyPosition.y, caveguyPosition.height, caveguyPosition.width);                  
+                	game.status = END;                                                                                                                             
+                }                                                                                                                                         
+                break;
+            case END:
+                restartOrExit(&game);
+                break;
+        }
+	    
+        moveBackground(&back, &mid, &fore, background.width, midground.width, foreground.width);                                                  
+	    // NOTE: Texture is scaled twice its size, so it sould be considered on scrolling
+	    BeginDrawing();
+	        ClearBackground(GetColor(0x052c46ff));
+	        RenderBackground(&background, &midground, &foreground, &back, &mid, &fore);            
+            switch(game.status) {
+                case START:
+                    DrawText("PRESS ANY KEY TO START", SCREEN_WIDTH / 2 - 140, SCREEN_HEIGHT / 2 - 50, 20, WHITE);
+                    break;
+                case GAMEPLAY: 
+	                DrawTextureRec(caveguy, caveguyAnimation.frameRec, caveguyAnimation.position, WHITE);
+	                DrawTextureRec(scarfy, scarfyAnimation.frameRec, scarfyAnimation.position, WHITE);
+	                break;
+	            case END:
+	                DrawText("PRESS [R] to restart / any other key to exit", SCREEN_WIDTH / 2 - 200, SCREEN_HEIGHT / 2 - 50, 20, WHITE);   
+	                break; 
+                }
+	    EndDrawing();
     }
     UnloadTexture(scarfy);      // Texture unloading
     UnloadTexture(background);  // Unload background texture
