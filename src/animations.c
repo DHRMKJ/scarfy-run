@@ -18,14 +18,14 @@ void initAnimationData(AnimationData* animation, Texture2D* sprite) {
 }
 
 void walkAnimation(Texture2D* sprite, AnimationData* animation) {
-    	if (animation -> framesCounter >= (FPS / animation -> framesSpeed)) {
-        	animation -> framesCounter = 0;
-        	animation -> currentFrame++;
-	    	if (animation -> currentFrame > MAX_SPRITE_FRAMES) { 
-             		animation -> currentFrame = 0;
-	    	} 
-	    	animation -> frameRec.x = (float)animation -> currentFrame * (float)sprite -> width / SPRITES_COUNTER;
-    	}
+  if (animation -> framesCounter >= (FPS / animation -> framesSpeed)) {
+    animation -> framesCounter = 0;
+    animation -> currentFrame++;
+	  if (animation -> currentFrame > MAX_SPRITE_FRAMES) { 
+      animation -> currentFrame = 0;
+	  } 
+	  animation -> frameRec.x = (float)animation -> currentFrame * (float)sprite -> width / SPRITES_COUNTER;
+  }
 }
 
 void jumpAnimation(Texture2D* sprite, AnimationData* animation) {
@@ -39,11 +39,11 @@ void jumpAnimation(Texture2D* sprite, AnimationData* animation) {
 			animation -> actions.jump = true;
 		}
 	}
-	
+
 	if(IsKeyReleased(KEY_UP)) {
 		animation -> actions.jump = true;
 	}
-	
+
 	if(animation -> actions.jump) {
 		if(animation -> position.y != SCREEN_HEIGHT - sprite -> height) {
 			animation -> position.y += GRAVITY;
@@ -55,11 +55,11 @@ void jumpAnimation(Texture2D* sprite, AnimationData* animation) {
 
 void RenderBackground(Texture2D* background,Texture2D* midground, Texture2D* foreground, Background* back, Background* mid, Background* fore) {
 	DrawTextureEx(*background, (Vector2){back -> scroll, 20}, BACKGROUND_TEXTURE);
-      	DrawTextureEx(*background, (Vector2){background -> width*2 + back -> scroll, 20}, BACKGROUND_TEXTURE);
+  DrawTextureEx(*background, (Vector2){background -> width*2 + back -> scroll, 20}, BACKGROUND_TEXTURE);
 
-      	DrawTextureEx(*midground, (Vector2){mid -> scroll, 20}, BACKGROUND_TEXTURE);
-      	DrawTextureEx(*midground, (Vector2){midground -> width*2 + mid -> scroll, 20}, BACKGROUND_TEXTURE);
-			
+  DrawTextureEx(*midground, (Vector2){mid -> scroll, 20}, BACKGROUND_TEXTURE);
+  DrawTextureEx(*midground, (Vector2){midground -> width*2 + mid -> scroll, 20}, BACKGROUND_TEXTURE);
+
 	DrawTextureEx(*foreground, (Vector2){fore -> scroll, 70}, BACKGROUND_TEXTURE);
 	DrawTextureEx(*foreground, (Vector2){foreground -> width*2 + fore -> scroll, 70}, BACKGROUND_TEXTURE);
 }
@@ -81,10 +81,10 @@ bool detectCollitions(Rectangle p1, Rectangle p2) {
 void initBackground(Background* back, Background* mid, Background* fore) {
 	back -> speed = SPEED / 10;
 	back -> scroll = 0.0f;
-	
+
 	mid -> speed = SPEED / 2;
 	mid -> scroll = 0.0f;
-	
+
 	fore -> speed = SPEED;
 	fore -> scroll = 0.0f;
 }
@@ -94,7 +94,7 @@ void moveBackground(Background* back, Background* mid, Background* fore, int bac
 	back -> scroll -= back -> speed;
 	mid -> scroll -= mid -> speed;
 	fore -> scroll -= fore -> speed;
-        if (back -> scroll <= -backgroundWidth*2) back -> scroll = 0.0f;
-        if (mid -> scroll <= -midgroundWidth*2) mid -> scroll = 0.0f;
-        if (fore -> scroll <= -foregroundWidth*2) fore -> scroll = 0.0f;
+  if (back -> scroll <= -backgroundWidth*2) back -> scroll = 0.0f;
+  if (mid -> scroll <= -midgroundWidth*2) mid -> scroll = 0.0f;
+  if (fore -> scroll <= -foregroundWidth*2) fore -> scroll = 0.0f;
 }

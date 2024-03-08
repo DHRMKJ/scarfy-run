@@ -19,10 +19,10 @@ int main(void)
 
     Background back, mid, fore;
     initBackground(&back, &mid, &fore);
-    
+
     AnimationData scarfyAnimation;
     AnimationData caveguyAnimation;
-   
+
     SetTargetFPS(FPS);               // Set our game to run at 60 frames-per-second
 
     while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -35,14 +35,14 @@ int main(void)
                 clickToStart(&game);
                 break;
             case GAMEPLAY:
-        	scarfyAnimation.framesCounter += 1;
-	        caveguyAnimation.framesCounter += 1;
-	            
-	        walkAnimation(&caveguy, &caveguyAnimation);
-	        moveBackward(&caveguy, &caveguyAnimation);
-	            
-	        walkAnimation(&scarfy, &scarfyAnimation);
-	        jumpAnimation(&scarfy, &scarfyAnimation);
+        	    scarfyAnimation.framesCounter += 1;
+	            caveguyAnimation.framesCounter += 1;
+
+	            walkAnimation(&caveguy, &caveguyAnimation);
+	            moveBackward(&caveguy, &caveguyAnimation);
+
+	            walkAnimation(&scarfy, &scarfyAnimation);
+	            jumpAnimation(&scarfy, &scarfyAnimation);
 
                 Rectangle scarfyPosition = { scarfyAnimation.position.x, scarfyAnimation.position.y, scarfy.width / SPRITES_COUNTER, scarfy.height };     
                 Rectangle caveguyPosition = { caveguyAnimation.position.x, caveguyAnimation.position.y, caveguy.width / SPRITES_COUNTER, caveguy.height };
@@ -56,31 +56,31 @@ int main(void)
                 restartOrExit(&game);
                 break;
         }
-	    
+
         moveBackground(&back, &mid, &fore, background.width, midground.width, foreground.width);                                                  
 	    // NOTE: Texture is scaled twice its size, so it sould be considered on scrolling
-	BeginDrawing();
-	ClearBackground(GetColor(0x052c46ff));
-	RenderBackground(&background, &midground, &foreground, &back, &mid, &fore);            
+	    BeginDrawing();
+	    ClearBackground(GetColor(0x052c46ff));
+	    RenderBackground(&background, &midground, &foreground, &back, &mid, &fore);            
         switch(game.status) {
         	case START:
-                    	DrawText("PRESS ANY KEY TO START", SCREEN_WIDTH / 2 - 140, SCREEN_HEIGHT / 2 - 50, 20, WHITE);
-                    	break;
-                case GAMEPLAY: 
+                DrawText("PRESS ANY KEY TO START", SCREEN_WIDTH / 2 - 140, SCREEN_HEIGHT / 2 - 50, 20, WHITE);
+                break;
+            case GAMEPLAY: 
 	        	DrawTextureRec(caveguy, caveguyAnimation.frameRec, caveguyAnimation.position, WHITE);
-	                DrawTextureRec(scarfy, scarfyAnimation.frameRec, scarfyAnimation.position, WHITE);
-	                break;
+	            DrawTextureRec(scarfy, scarfyAnimation.frameRec, scarfyAnimation.position, WHITE);
+	            break;
 	        case END:
-	                DrawText("PRESS [R] to restart / any other key to exit", SCREEN_WIDTH / 2 - 220, SCREEN_HEIGHT / 2 - 50, 20, WHITE);   
-	                break; 
-                }
+	            DrawText("PRESS [R] to restart / any other key to exit", SCREEN_WIDTH / 2 - 220, SCREEN_HEIGHT / 2 - 50, 20, WHITE);   
+	            break; 
+        }
 	    EndDrawing();
     }
     UnloadTexture(scarfy);      // Texture unloading
     UnloadTexture(background);  // Unload background texture
     UnloadTexture(midground);   // Unload midground texture
     UnloadTexture(foreground); 
- 
+
     CloseWindow();                // Close window and OpenGL context
     return 0;
 }
