@@ -29,7 +29,7 @@ void walkAnimation(Texture2D* sprite, AnimationData* animation) {
 }
 
 void jumpAnimation(Texture2D* sprite, AnimationData* animation) {
-		const int MAX_JUMP = 140;
+		const int MAX_JUMP = 130;
 		const float GRAVITY = 8.0;
 		if(!animation -> actions.jump && IsKeyDown(KEY_UP)) {
 			if (animation -> position.y >= MAX_JUMP) {

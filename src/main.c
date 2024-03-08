@@ -71,7 +71,7 @@ int main(void)
 	                DrawTextureRec(scarfy, scarfyAnimation.frameRec, scarfyAnimation.position, WHITE);
 	                break;
 	            case END:
-	                DrawText("PRESS [R] to restart / any other key to exit", SCREEN_WIDTH / 2 - 200, SCREEN_HEIGHT / 2 - 50, 20, WHITE);   
+	                DrawText("PRESS [R] to restart / any other key to exit", SCREEN_WIDTH / 2 - 220, SCREEN_HEIGHT / 2 - 50, 20, WHITE);   
 	                break; 
                 }
 	    EndDrawing();
