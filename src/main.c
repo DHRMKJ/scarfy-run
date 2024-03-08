@@ -35,14 +35,14 @@ int main(void)
                 clickToStart(&game);
                 break;
             case GAMEPLAY:
-                scarfyAnimation.framesCounter += 1;
-	            caveguyAnimation.framesCounter += 1;
+        	scarfyAnimation.framesCounter += 1;
+	        caveguyAnimation.framesCounter += 1;
 	            
-	            walkAnimation(&caveguy, &caveguyAnimation);
-	            moveBackward(&caveguy, &caveguyAnimation);
+	        walkAnimation(&caveguy, &caveguyAnimation);
+	        moveBackward(&caveguy, &caveguyAnimation);
 	            
-	            walkAnimation(&scarfy, &scarfyAnimation);
-	            jumpAnimation(&scarfy, &scarfyAnimation);
+	        walkAnimation(&scarfy, &scarfyAnimation);
+	        jumpAnimation(&scarfy, &scarfyAnimation);
 
                 Rectangle scarfyPosition = { scarfyAnimation.position.x, scarfyAnimation.position.y, scarfy.width / SPRITES_COUNTER, scarfy.height };     
                 Rectangle caveguyPosition = { caveguyAnimation.position.x, caveguyAnimation.position.y, caveguy.width / SPRITES_COUNTER, caveguy.height };
@@ -59,18 +59,18 @@ int main(void)
 	    
         moveBackground(&back, &mid, &fore, background.width, midground.width, foreground.width);                                                  
 	    // NOTE: Texture is scaled twice its size, so it sould be considered on scrolling
-	    BeginDrawing();
-	        ClearBackground(GetColor(0x052c46ff));
-	        RenderBackground(&background, &midground, &foreground, &back, &mid, &fore);            
-            switch(game.status) {
-                case START:
-                    DrawText("PRESS ANY KEY TO START", SCREEN_WIDTH / 2 - 140, SCREEN_HEIGHT / 2 - 50, 20, WHITE);
-                    break;
+	BeginDrawing();
+	ClearBackground(GetColor(0x052c46ff));
+	RenderBackground(&background, &midground, &foreground, &back, &mid, &fore);            
+        switch(game.status) {
+        	case START:
+                    	DrawText("PRESS ANY KEY TO START", SCREEN_WIDTH / 2 - 140, SCREEN_HEIGHT / 2 - 50, 20, WHITE);
+                    	break;
                 case GAMEPLAY: 
-	                DrawTextureRec(caveguy, caveguyAnimation.frameRec, caveguyAnimation.position, WHITE);
+	        	DrawTextureRec(caveguy, caveguyAnimation.frameRec, caveguyAnimation.position, WHITE);
 	                DrawTextureRec(scarfy, scarfyAnimation.frameRec, scarfyAnimation.position, WHITE);
 	                break;
-	            case END:
+	        case END:
 	                DrawText("PRESS [R] to restart / any other key to exit", SCREEN_WIDTH / 2 - 220, SCREEN_HEIGHT / 2 - 50, 20, WHITE);   
 	                break; 
                 }
