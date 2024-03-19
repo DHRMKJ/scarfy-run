@@ -1,4 +1,3 @@
-#include<stdio.h>
 #include "config.h"
 #include "animations.h"
 #include "game.h"
@@ -10,12 +9,12 @@ int main(void)
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "scarfy run");
 
     // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
-    Texture2D scarfy = LoadTexture("resources/scarfy.png");        // Texture loading
-    Texture2D caveguy = LoadTexture("resources/attack.png");
+    Texture2D scarfy = LoadTexture("../resources/scarfy.png");        // Texture loading
+    Texture2D caveguy = LoadTexture("../resources/attack.png");
 
-    Texture2D background = LoadTexture("resources/cyberpunk_street_background.png");
-    Texture2D midground = LoadTexture("resources/cyberpunk_street_midground.png");
-    Texture2D foreground = LoadTexture("resources/cyberpunk_street_foreground.png");    
+    Texture2D background = LoadTexture("../resources/cyberpunk_street_background.png");
+    Texture2D midground = LoadTexture("../resources/cyberpunk_street_midground.png");
+    Texture2D foreground = LoadTexture("../resources/cyberpunk_street_foreground.png");    
 
     Background back, mid, fore;
     initBackground(&back, &mid, &fore);
@@ -47,8 +46,6 @@ int main(void)
                 Rectangle scarfyPosition = { scarfyAnimation.position.x, scarfyAnimation.position.y, scarfy.width / SPRITES_COUNTER, scarfy.height };     
                 Rectangle caveguyPosition = { caveguyAnimation.position.x, caveguyAnimation.position.y, caveguy.width / SPRITES_COUNTER, caveguy.height };
                 if(detectCollitions(scarfyPosition, caveguyPosition)) {                                                                                   
-                	printf("%lf %lf %lf %lf\n",scarfyPosition.x, scarfyPosition.y, scarfyPosition.height, scarfyPosition.width);                          
-                	printf("%lf %lf %lf %lf\n\n\n",caveguyPosition.x, caveguyPosition.y, caveguyPosition.height, caveguyPosition.width);                  
                 	game.status = END;                                                                                                                             
                 }                                                                                                                                         
                 break;
