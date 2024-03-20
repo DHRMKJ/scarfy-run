@@ -18,5 +18,6 @@ void InitializeGame(Game* game);
 void clickToStart(Game* game);
 void restartOrExit(Game* game);
 void calcScore(Game* game);
+void cleanUpMemory(Game* game);
 
 #endif

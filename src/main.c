@@ -1,3 +1,4 @@
+#include <string.h>
 #include "config.h"
 #include "animations.h"
 #include "game.h"
@@ -64,7 +65,7 @@ int main(void)
                 DrawText("PRESS ANY KEY TO START", SCREEN_WIDTH / 2 - 140, SCREEN_HEIGHT / 2 - 50, 20, WHITE);
                 break;
             case GAMEPLAY:
-                DrawText(game.score, SCREEN_WIDTH - 60, 20, 60, WHITE);
+                DrawText(game.score, SCREEN_WIDTH - 20 * strlen(game.score) - 20 , 20, 40, WHITE);
 	        	DrawTextureRec(caveguy, caveguyAnimation.frameRec, caveguyAnimation.position, WHITE);
 	            DrawTextureRec(scarfy, scarfyAnimation.frameRec, scarfyAnimation.position, WHITE);
 	            break;
@@ -78,7 +79,7 @@ int main(void)
     UnloadTexture(background);  // Unload background texture
     UnloadTexture(midground);   // Unload midground texture
     UnloadTexture(foreground); 
-
+    cleanUpMemory(&game);
     CloseWindow();                // Close window and OpenGL context
     return 0;
 }
