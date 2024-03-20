@@ -1,5 +1,6 @@
 #ifndef GAME_H
 #define GAME_H
+#include <time.h>
 
 typedef enum {
 	START,
@@ -9,10 +10,13 @@ typedef enum {
 
 typedef struct {
 	Screen status;
+	time_t started_at;
+	char* score;
 } Game;
 
 void InitializeGame(Game* game);
 void clickToStart(Game* game);
 void restartOrExit(Game* game);
+void calcScore(Game* game);
 
 #endif

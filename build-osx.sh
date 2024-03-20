@@ -90,9 +90,10 @@ COMPILATION_FLAGS="-std=c99 -O2 -flto"
 FINAL_COMPILE_FLAGS="-s"
 WARNING_FLAGS="-Wall -Wextra -Wpedantic"
 LINK_FLAGS="-flto -framework OpenGL -framework OpenAL -framework IOKit -framework CoreVideo -framework Cocoa"
+
 # Debug changes to flags
 if [ -n "$BUILD_DEBUG" ]; then
-    OUTPUT_DIR="builds-debug/osx"
+    OUTPUT_DIR="builds-debug"
     COMPILATION_FLAGS="-std=c99 -O0 -g"
     FINAL_COMPILE_FLAGS=""
     LINK_FLAGS="-framework OpenGL -framework OpenAL -framework IOKit -framework CoreVideo -framework Cocoa"
@@ -136,6 +137,10 @@ fi
 
 # Build the actual game
 mkdir -p $OUTPUT_DIR
+
+#copy the resources
+cp -r resources "$OUTPUT_DIR"/resources
+
 cd $OUTPUT_DIR
 [ -z "$QUIET" ] && echo "COMPILE-INFO: Compiling game code."
 if [ -n "$REALLY_QUIET" ]; then

@@ -9,12 +9,12 @@ int main(void)
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "scarfy run");
 
     // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
-    Texture2D scarfy = LoadTexture("../resources/scarfy.png");        // Texture loading
-    Texture2D caveguy = LoadTexture("../resources/attack.png");
+    Texture2D scarfy = LoadTexture("resources/scarfy.png");        // Texture loading
+    Texture2D caveguy = LoadTexture("resources/attack.png");
 
-    Texture2D background = LoadTexture("../resources/cyberpunk_street_background.png");
-    Texture2D midground = LoadTexture("../resources/cyberpunk_street_midground.png");
-    Texture2D foreground = LoadTexture("../resources/cyberpunk_street_foreground.png");    
+    Texture2D background = LoadTexture("resources/cyberpunk_street_background.png");
+    Texture2D midground = LoadTexture("resources/cyberpunk_street_midground.png");
+    Texture2D foreground = LoadTexture("resources/cyberpunk_street_foreground.png");    
 
     Background back, mid, fore;
     initBackground(&back, &mid, &fore);
@@ -36,7 +36,7 @@ int main(void)
             case GAMEPLAY:
         	    scarfyAnimation.framesCounter += 1;
 	            caveguyAnimation.framesCounter += 1;
-
+                calcScore(&game);
 	            walkAnimation(&caveguy, &caveguyAnimation);
 	            moveBackward(&caveguy, &caveguyAnimation);
 
@@ -63,7 +63,8 @@ int main(void)
         	case START:
                 DrawText("PRESS ANY KEY TO START", SCREEN_WIDTH / 2 - 140, SCREEN_HEIGHT / 2 - 50, 20, WHITE);
                 break;
-            case GAMEPLAY: 
+            case GAMEPLAY:
+                DrawText(game.score, SCREEN_WIDTH - 60, 20, 60, WHITE);
 	        	DrawTextureRec(caveguy, caveguyAnimation.frameRec, caveguyAnimation.position, WHITE);
 	            DrawTextureRec(scarfy, scarfyAnimation.frameRec, scarfyAnimation.position, WHITE);
 	            break;

@@ -1,4 +1,5 @@
 build-*
+builds-debug
 !build-*.sh
 !build-*.bat
 temp

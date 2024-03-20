@@ -127,6 +127,7 @@ set WARNING_FLAGS=/W3 /sdl
 set SUBSYSTEM_FLAGS=/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup
 set LINK_FLAGS=/link /LTCG kernel32.lib user32.lib shell32.lib winmm.lib gdi32.lib opengl32.lib
 set OUTPUT_DIR=build-windows
+
 REM Debug changes to flags
 IF DEFINED BUILD_DEBUG (
   set OUTPUT_FLAG=/Fe: "!GAME_NAME!"
@@ -183,6 +184,10 @@ IF NOT EXIST !TEMP_DIR!\ (
 
 REM Move to the build directory
 IF NOT EXIST !OUTPUT_DIR! mkdir !OUTPUT_DIR!
+
+REM Copy the resources
+xcopy /s /e /i resources OUTPUT_DIR/
+
 cd !OUTPUT_DIR!
 
 REM Build the actual game
