@@ -1,2 +1,4 @@
 # WELL WELL WELL
-## can you make some sprites like the scarfy one, i'd really appreciate it!
+## I found a scarfy's sprite, so why not make a game out of it,
+
+![Mentioned Sprite][https://pasteboard.co/UaD9Mt9hi5T5.png]
